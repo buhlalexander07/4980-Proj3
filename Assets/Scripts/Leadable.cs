@@ -17,8 +17,25 @@ public class Leadable : MonoBehaviour
     // Lets other components check whether this animal is currently being led
     public bool IsBeingLed => leader != null;
 
+    // Recovered animals can no longer be interacted with.
+    // Objects without a recovery component remain interactable
+    public bool CanInteract => recovery == null || !recovery.IsRecovered;
+
+    // Recovery is optional because monsters and other interactable objects
+    // may use Leadable without being recoverable.
+    private AnimalRecovery recovery;
+
     Transform leader;      // set while being led, null when released
     bool attacking = false;
+
+    /// <summary>
+    /// Finds this object's optional recovery component so future interactions
+    /// can check whether the animal has already been delivered
+    /// </summary>
+    private void Awake()
+    {
+        recovery = GetComponent<AnimalRecovery>();
+    }
 
     /// <summary>
     /// Called when the player interacts with this animal to begin leading it.
@@ -27,6 +44,14 @@ public class Leadable : MonoBehaviour
     /// <param name="player"> The Transform of the player leading this animal. </param>
     public void StartLeading(Transform player)
     {
+        // A recovered animal is no longer eligible for interaction.
+        // Check here as well as in the player controllers so other callers
+        // cannot accidentally restart leading.
+        if (!CanInteract)
+        {
+            return;
+        }
+
         if (isMonster)
         {
             // Placeholder: a monster "attacks" instead of being led.
