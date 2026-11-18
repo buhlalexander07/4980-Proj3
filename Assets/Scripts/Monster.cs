@@ -12,8 +12,8 @@ public class Monster : MonoBehaviour
     public void Attack()
     {
         StartCoroutine(TriggerKnockback());
+        GameObject.Find("Timer").GetComponent<GlobalTimer>().AddTime();
         /* Placeholder
-         * clock -= 30 seconds;
          * Vector3 RespawnLocation = Vector3(...)
          * player.transform.position = RespawnLocation; */
     }

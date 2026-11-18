@@ -70,6 +70,11 @@ public class GlobalTimer : MonoBehaviour
         completed = false;
     }
 
+    public void AddTime()
+    {
+        curr_time += 30.0f;
+    }
+
     private void UpdateTimerDisplay()
     {
         if (timer_text != null)
