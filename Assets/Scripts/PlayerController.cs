@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     CharacterController controller;
     Transform camTransform;
     float pitch;
+    public bool isKnockedBack;
 
     void Start()
     {
@@ -39,6 +40,8 @@ public class PlayerController : MonoBehaviour
         pitch = Mathf.Clamp(pitch - delta.y, -80f, 80f);
         camTransform.localRotation = Quaternion.Euler(pitch, 0f, 0f);
 
+        // the player cannot move around if they are knocked back
+        if (isKnockedBack) { return; }
         // Move (WASD or arrow keys)
         float x = 0f, y = 0f;
         if (kb.aKey.isPressed || kb.leftArrowKey.isPressed) x -= 1f;

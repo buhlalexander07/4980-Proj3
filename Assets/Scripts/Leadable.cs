@@ -54,9 +54,9 @@ public class Leadable : MonoBehaviour
 
         if (isMonster)
         {
-            // Placeholder: a monster "attacks" instead of being led.
+            // A monster "attacks" instead of being led.
             attacking = true;
-            //Monster attack thing
+            gameObject.GetComponent<Monster>().Attack();
             Debug.Log("Monster hit the player! (placeholder - time loss is teammate's system)");
             return;
         }
