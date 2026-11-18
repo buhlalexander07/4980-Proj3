@@ -11,7 +11,10 @@ public class LeadController : MonoBehaviour
     void Update()
     {
         var mouse = Mouse.current;
-        if (mouse == null) return;
+        if (mouse == null)
+        {
+            return;
+        }
 
         // Crosshair check
         var cam = Camera.main;
@@ -20,14 +23,20 @@ public class LeadController : MonoBehaviour
         {
             Ray ray = new Ray(cam.transform.position, cam.transform.forward);
             if (Physics.Raycast(ray, out RaycastHit hoverHit, reachDistance))
-                aimingAtAnimal = hoverHit.collider.GetComponent<Leadable>() != null;
+            {
+                // Show an interactable crosshair only for eligible objects.
+                Leadable animal = hoverHit.collider.GetComponentInParent<Leadable>();
+                aimingAtAnimal = animal != null && animal.CanInteract;
+            }
         }
 
         // Grab
         if (mouse.leftButton.wasPressedThisFrame)
         {
             if (current == null)
+            {
                 TryStartLead();
+            }
         }
 
         // Release
@@ -41,20 +50,40 @@ public class LeadController : MonoBehaviour
         }
     }
 
-    void TryStartLead()
+    /// <summary>
+    /// Attempts to interact with an eligible animal in front of the player.
+    /// Normal animals begin following, while monsters handle their own interaction.
+    /// </summary>
+    private void TryStartLead()
     {
-        var cam = Camera.main;
-        if (cam == null) return;
+        Camera cam = Camera.main;
+
+        if (cam == null)
+        {
+            return;
+        }
 
         Ray ray = new Ray(cam.transform.position, cam.transform.forward);
         if (Physics.Raycast(ray, out RaycastHit hit, reachDistance))
         {
-            Leadable animal = hit.collider.GetComponent<Leadable>();
-            if (animal != null)
+            Leadable animal = hit.collider.GetComponentInParent<Leadable>();
+
+            // Ignore objects that cannot be interacted with,
+            // including animals that have already been recovered.
+            if (animal == null || !animal.CanInteract)
             {
-                animal.StartLeading(transform);
-                if (!animal.isMonster)
-                    current = animal;   // monsters can't be led, only attack
+                return;
+            }
+
+            // Let the animal decide whether to follow or trigger
+            // its monster interaction.
+            animal.StartLeading(transform);
+
+            // Track an animal only if it actually started following.
+            // Monsters and recovered animals never become current.
+            if (animal.IsBeingLed)
+            {
+                current = animal;
             }
         }
     }
