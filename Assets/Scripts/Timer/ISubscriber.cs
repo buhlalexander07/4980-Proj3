@@ -1,6 +1,19 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class ISubscriber
+public abstract class ISubscriber : MonoBehaviour
 {
-    public abstract void Notify();
+    protected List<GameEvent> gameEvents;
+    public void Notify(String info)
+    {
+        for (int i = 0; i < gameEvents.Count; i++)
+        {
+            gameEvents[i].ActivateEvent(info);
+        }
+    }
+
+    void AddEvent(GameEvent gameEvent) {
+        gameEvents.Add(gameEvent);
+    }
 }

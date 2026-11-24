@@ -13,10 +13,6 @@ public class GlobalTimer : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        //if (target_time < 0)
-        //{
-        //    target_time = default_time;
-        //}
         target_time = default_time;
         curr_time = 0;
         paused = false;

@@ -1,29 +1,23 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class IPublisher
+public abstract class IPublisher : MonoBehaviour
 {
-    List<ISubscriber> subscribers;
+    protected List<ISubscriber> subscribers;
     public void AddSubscriber(ISubscriber sub)
     {
         subscribers.Add(sub);
     }
     public void RemoveSubscriber(ISubscriber sub)
     {
-        for (int i = 0; i < subscribers.Count; i++)
-        {
-            if (subscribers[i] == sub)
-            {
-                subscribers.RemoveAt(i);
-                return;
-            }
-        }
+        subscribers.Remove(sub);
     }
-    public void NotifySubscribers()
+    protected void NotifySubscribers(String info)
     {
         for (int i = 0; i < subscribers.Count; i++)
         {
-            subscribers[i].Notify();
+            subscribers[i].Notify(info);
         }
     }
 }
