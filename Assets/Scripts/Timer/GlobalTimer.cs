@@ -81,8 +81,17 @@ public class GlobalTimer : MonoBehaviour
             }
             else
             {
-                timer_text.text = curr_time.ToString("F2") + "s";
+                timer_text.text = formatTime(target_time - curr_time);
             }
         }
+    }
+
+    private string formatTime(float time)
+    {
+        int minutes = Mathf.FloorToInt(time / 60.0f);
+        string minutes_string = minutes.ToString().PadLeft(2, '0');
+        int seconds = Mathf.FloorToInt(time % 60.0f);
+        string seconds_string = seconds.ToString().PadLeft(2, '0');
+        return $"{minutes_string}:{seconds_string}";
     }
 }
