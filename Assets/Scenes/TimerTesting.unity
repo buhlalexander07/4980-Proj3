@@ -606,7 +606,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31fff478702532d4b951849e10ef76a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GlobalTimer
-  default_time: 300
+  default_time: 10
   curr_time: 0
   timer_text: {fileID: 1897380761}
 --- !u!4 &2142632269

@@ -1,4 +1,6 @@
+using System.Threading;
 using TMPro;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 public class GlobalTimer : MonoBehaviour
@@ -22,7 +24,7 @@ public class GlobalTimer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        UpdateTimerDisplay();   
+        UpdateTimerDisplay();
         if (!paused)
         {
             curr_time += Time.deltaTime;
@@ -78,20 +80,34 @@ public class GlobalTimer : MonoBehaviour
             if (completed)
             {
                 timer_text.text = "TIME UP";
+                timer_text.color = Color.white;
             }
             else
             {
-                timer_text.text = formatTime(target_time - curr_time);
+                timer_text.text = FormatTime(target_time - curr_time);
+                if (GetPercentageDone() >= 75.0f)
+                {
+                    timer_text.color = Color.red;
+                }
+                else
+                {
+                    timer_text.color = Color.white;
+                }
             }
         }
     }
 
-    private string formatTime(float time)
+    private string FormatTime(float time)
     {
         int minutes = Mathf.FloorToInt(time / 60.0f);
         string minutes_string = minutes.ToString().PadLeft(2, '0');
         int seconds = Mathf.FloorToInt(time % 60.0f);
         string seconds_string = seconds.ToString().PadLeft(2, '0');
         return $"{minutes_string}:{seconds_string}";
+    }
+
+    private float GetPercentageDone()
+    {
+        return (curr_time / target_time) * 100.0f;
     }
 }
