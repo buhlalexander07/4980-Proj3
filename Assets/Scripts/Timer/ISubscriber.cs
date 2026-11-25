@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class ISubscriber : MonoBehaviour
 {
     protected List<GameEvent> gameEvents;
-    public void Notify(String info)
+    public virtual void Notify(String info)
     {
         for (int i = 0; i < gameEvents.Count; i++)
         {

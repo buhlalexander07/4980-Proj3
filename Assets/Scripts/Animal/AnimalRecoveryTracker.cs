@@ -5,7 +5,7 @@ using UnityEngine;
 // Tracks recovery progress across a group of animals.
 // Announces progress and completion without depending on a specific game manager.
 [DisallowMultipleComponent]
-public class AnimalRecoveryTracker : MonoBehaviour
+public class AnimalRecoveryTracker : IPublisher
 {
     // Animals already placed in the scene can be assigned through the Inspector.
     // Animals spawned at runtime can be added through RegisterAnimal().
@@ -85,6 +85,7 @@ public class AnimalRecoveryTracker : MonoBehaviour
         // AnimalRecovery.TryRecover() fires its event only once,
         // so each registered animal contributes at most one recovery.
         RecoveredCount++;
+        NotifySubscribers("recovered");
 
         // Notify listeners before checking whether recovery is complete.
         ProgressChanged?.Invoke(RecoveredCount, TotalAnimals);

@@ -67,5 +67,5 @@
         "*.sln": "*.csproj",
         "*.slnx": "*.csproj"
     },
-    "dotnet.defaultSolution": "4980-Proj3.slnx"
+    "dotnet.defaultSolution": "ExtraAnimal.slnx"
 }

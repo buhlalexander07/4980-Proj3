@@ -4,7 +4,8 @@ using UnityEngine;
 
 public abstract class IPublisher : MonoBehaviour
 {
-    protected List<ISubscriber> subscribers;
+    // Used AI to debug null references
+    protected List<ISubscriber> subscribers = new List<ISubscriber>();
     public void AddSubscriber(ISubscriber sub)
     {
         subscribers.Add(sub);

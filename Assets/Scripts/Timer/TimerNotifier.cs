@@ -7,24 +7,38 @@ public class TimerNotifier : IPublisher
 {
     private GlobalTimer timer;
     private bool active;
-    private List<EventInterval> activeEvents;
+    private List<EventInterval> activeEvents = new List<EventInterval>();
+    private bool sentGameOver = false;
     void Start()
     {
         if (TryGetComponent<GlobalTimer>(out timer) == false)
         {
             active = false;
         }
+        else
+        {
+            SetActiveTimer(timer);
+        }
     }
     void FixedUpdate()
     {
         if (active)
         {
-            for (int i = 0; i < activeEvents.Count; i++)
+            if (activeEvents != null)
             {
-                if (Mathf.Abs(activeEvents[i].activationInterval - timer.GetElapsedTime()) <= Time.fixedDeltaTime)
+                for (int i = 0; i < activeEvents.Count; i++)
                 {
-                    NotifySubscribers(activeEvents[i].eventName);
+                    if (Mathf.Abs(activeEvents[i].activationInterval - timer.GetElapsedTime()) <= Time.fixedDeltaTime)
+                    {
+                        NotifySubscribers(activeEvents[i].eventName);
+                    }
                 }
+            }
+            if (timer.IsGameOver() && !sentGameOver)
+            {
+                Debug.Log("Sent game over");
+                NotifySubscribers("gameover");
+                sentGameOver = true;
             }
         }
     }
@@ -40,9 +54,9 @@ public class TimerNotifier : IPublisher
         public String eventName;
         public float activationInterval;
     }
-    
+
     public void addEventInterval(String name, float timeInterval)
     {
-        activeEvents.Add(new EventInterval {eventName = name, activationInterval = timeInterval});
+        activeEvents.Add(new EventInterval { eventName = name, activationInterval = timeInterval });
     }
 }
