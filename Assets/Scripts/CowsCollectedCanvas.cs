@@ -26,6 +26,7 @@ public class CowsCollectedCanvas : ISubscriber
         if (info == "recovered")
         {
             Debug.Log("Recieved");
+            // Used AI to understand the existing code, specifically how the count of recovered animals works 
             int recovered = animalRecoveryTracker.RecoveredCount;
             cowCount.text = $"{recovered} Cows";
         }
