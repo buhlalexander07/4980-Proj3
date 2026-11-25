@@ -20,6 +20,7 @@ public class GameOverManager : ISubscriber
         
     }
 
+    // Used AI to figure out how to override the notify for a simpler usage
     public override void Notify(string info)
     {
         if (info == "gameover")
