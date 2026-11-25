@@ -73,6 +73,11 @@ public class GlobalTimer : MonoBehaviour
         curr_time += 30.0f;
     }
 
+    public bool IsGameOver()
+    {
+        return curr_time >= target_time;
+    }
+
     private void UpdateTimerDisplay()
     {
         if (timer_text != null)
