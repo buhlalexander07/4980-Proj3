@@ -84,8 +84,8 @@ public class GlobalTimer : MonoBehaviour
         {
             if (completed)
             {
-                timer_text.text = "TIME UP";
-                timer_text.color = Color.white;
+                // timer_text.text = "TIME UP";
+                // timer_text.color = Color.white;
             }
             else
             {

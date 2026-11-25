@@ -36,6 +36,7 @@ public class TimerNotifier : IPublisher
             }
             if (timer.IsGameOver() && !sentGameOver)
             {
+                Debug.Log("Sent game over");
                 NotifySubscribers("gameover");
                 sentGameOver = true;
             }
