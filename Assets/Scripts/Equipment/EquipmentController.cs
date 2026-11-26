@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using System.Collections.Generic;
 
 // Identifies the different types of equipment in the game.
 public enum EquipmentType
@@ -36,5 +37,56 @@ public class EquipmentController : MonoBehaviour
         // Update the equipped item and notify interested systems.
         equippedItem = item;
         EquipmentChanged?.Invoke(equippedItem);
+    }
+
+    /// <summary>
+    /// Switches to the next available equipment item.
+    /// </summary>
+    /// <param name="availableItems"> Equipment the player currently possesses. </param>
+    public void SwitchToNextItem(List<EquipmentType> availableItems)
+    {
+        // Cannot switch equipment if the player has no items.
+        if (availableItems.Count == 0)
+        {
+            return;
+        }
+
+        // Find the currently equipped item in the available items.
+        int currentIndex = availableItems.IndexOf(equippedItem);
+
+        // Move to the next item, wrapping around at the end.
+        int nextIndex = (currentIndex + 1) % availableItems.Count;
+
+        // Equip the next item using the existing equipment system.
+        SetEquippedItem(availableItems[nextIndex]);
+    }
+
+    /// <summary>
+    /// Switches to the previous available equipment item.
+    /// </summary>
+    /// <param name="availableItems"> equipment the player currently possesses. </param>
+    public void SwitchToPreviousItem(List<EquipmentType> availableItems)
+    {
+        // Cannot switch equipment if the player has no items.
+        if (availableItems.Count == 0)
+        {
+            return;
+        }
+
+        // Find the currently equipped item in the available items.
+        int currentIndex = availableItems.IndexOf(equippedItem);
+
+        // If the current item is unavailable, select the last item.
+        if (currentIndex == -1)
+        {
+            SetEquippedItem(availableItems[availableItems.Count - 1]);
+            return;
+        }
+
+        // Move to the previous item, wrapping around at the beginning.
+        int previousIndex = (currentIndex - 1 + availableItems.Count) % availableItems.Count;
+
+        // Equip the previous item using the existing equipment system.
+        SetEquippedItem(availableItems[previousIndex]);
     }
 }
