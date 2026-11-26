@@ -61,6 +61,7 @@ public class DeliveryZone : MonoBehaviour
         }
 
         // The animal has completely exited the zone.
+        other.GetComponentInParent<AnimalRecovery>().Escape();
         animalsInside.Remove(animal);
         animal.LeadingStopped -= HandleAnimalReleased;
     }

@@ -62,6 +62,7 @@ public class AnimalRecoveryTracker : IPublisher
 
         // Listen for future recovery events from this animal.
         animal.Recovered += HandleAnimalRecovered;
+        animal.Escaped += HandleAnimalEscaped;
 
         // Notify listeners that the total population has changed.
         ProgressChanged?.Invoke(RecoveredCount, TotalAnimals);
@@ -94,6 +95,19 @@ public class AnimalRecoveryTracker : IPublisher
         {
             AllRecovered?.Invoke();
         }
+    }
+
+    private void HandleAnimalEscaped(AnimalRecovery animal)
+    {
+        if (!trackedAnimals.Contains(animal))
+        {
+            return;
+        }
+
+        RecoveredCount--;
+        NotifySubscribers("escaped");
+
+        ProgressChanged?.Invoke(RecoveredCount, TotalAnimals);
     }
 
     /// <summary>

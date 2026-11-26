@@ -1,77 +1,117 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 public class WanderingAIComponent : MonoBehaviour
 {
     public Transform herdCenter;
+    public Transform barnCenter;
     [SerializeField] private float wanderRadius = 3f;
+    [SerializeField] private float wanderChance = 0.1f;
 
-    [SerializeField] private float chanceToStopWandering = 0.001f;
-    [SerializeField] private float chanceToStartWandering = 0.01f;
+    private NavMeshAgent agent;
+    private AnimalRecovery recovery;
+    private bool goalUpdated = false;
 
-    [SerializeField] private float maxMoveSpeed = 0.5f;
-    [SerializeField] private float moveAccel = 5f;
+    private bool canMove = true;
+    private bool wandering = true;
+    private bool returningToHome = false;
 
-    [SerializeField] private float chanceToChangeAngle = 0.001f;
-    [SerializeField] private float maxTurningPerFrame = 0.01f;
-
-    private Rigidbody rb;
-
-    private bool canWander = true;
-    private bool currentlyWandering = true;
-
-    private Vector3 targetVector = Vector3.zero;
+    private Vector3 goalPos;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        agent = GetComponent<NavMeshAgent>();
+        recovery = GetComponent<AnimalRecovery>();
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        if(canWander && Random.Range(0f, 1f) < chanceToStopWandering || !canWander && Random.Range(0f, 1f) < chanceToStartWandering)
+        bool inBarn = false;
+        if(recovery != null)
         {
-            canWander = !canWander;
+            inBarn = recovery.IsRecovered;
+        }
+        if (wandering && !inBarn && (herdCenter.position - transform.position).magnitude > wanderRadius + 0.25f)
+        {
+            //Return to home state
+            //We're wandering but not in the barn and outisde the home
+            
+            if (!returningToHome)
+            {
+                goalPos = herdCenter.position;
+                goalUpdated = true;
+                returningToHome = true;
+            }
+        }
+        else if (wandering)
+        {
+            //Wandering state/Barn state
+                
+            //We've made it back or are in the barn if we enter this branch
+            returningToHome = false;
+
+            if(((inBarn ? barnCenter.position : herdCenter.position) - transform.position).magnitude <= wanderRadius + 0.25f)
+            {
+                //If we decide to randomly wander, generate a new position and set that as the destination
+                if (Random.Range(0f, 1f) <= wanderChance)
+                {
+                    Vector2 randomOffset = Random.insideUnitCircle * wanderRadius;
+                    goalPos = (inBarn ? barnCenter.position: herdCenter.position) + new Vector3(randomOffset.x, 0, randomOffset.y);
+                    goalUpdated = true;
+                }
+            }
+        }
+        else if (!wandering)
+        {
+            //Lead state
+            //We're not wandering, so we're following a target point
+
+
         }
 
-        if (canWander && currentlyWandering)
+        if (goalUpdated)
         {
-            #region Rotation Handling
-            // If outside the radius, set target angle to be center of herd
-            Vector3 currHorizontalPos = new Vector3(rb.position.x, 0, rb.position.z);
-            if((herdCenter.position - rb.position).magnitude > wanderRadius)
-            {
-                Vector3 targetHorizontalPos = new Vector3(herdCenter.position.x, 0, herdCenter.position.z);
-                targetVector = (targetHorizontalPos - currHorizontalPos).normalized;
-            }
-            else if(Random.Range(0f, 1f) < chanceToChangeAngle)
-            {
-                Debug.Log("Random Angle Change");
-                targetVector = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f)).normalized;
-            }
-            Vector3 rotateVector = Vector3.RotateTowards(transform.forward, targetVector, maxTurningPerFrame, 0.0f);
-            Vector3 rotateVectorHorizontal = new Vector3(rotateVector.x, 0, rotateVector.z).normalized;
-            rb.rotation = Quaternion.Euler(0, Quaternion.LookRotation(rotateVectorHorizontal).eulerAngles.y, 0);
-            #endregion
-
-            #region Forward Movement
-            if (rb.linearVelocity.magnitude < maxMoveSpeed)
-            {
-                rb.AddForce(transform.forward * moveAccel, ForceMode.Acceleration);
-            }
-            #endregion
+            agent.destination = goalPos;
+            goalUpdated = false;
         }
-        Debug.DrawLine(rb.position, rb.position + targetVector, Color.red, 0.1f);
+    }
+
+    public void StartMoving()
+    {
+        agent.isStopped = false;
+    }
+
+    public void StopMoving()
+    {
+        agent.isStopped = true;
     }
 
     public void StartWandering()
     {
-        canWander = true;
+        wandering = true;
+
+        //Reset returhningToHome in case we start wandering outside the home radius
+        if (returningToHome)
+        {
+            returningToHome = false;
+        }
+        Debug.Log("Wandering started");
     }
 
-    public void StopWandering()
+    public void StartFollowingTarget()
     {
-        canWander = false;
+        wandering = false;
+        Debug.Log("Following started");
+    }
+
+    public void SetTarget(Vector3 position)
+    {
+        if (!wandering)
+        {
+            goalPos = position;
+            goalUpdated = true;
+        }
     }
 }

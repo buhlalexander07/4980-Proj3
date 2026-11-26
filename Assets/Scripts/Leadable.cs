@@ -5,7 +5,7 @@ using UnityEngine;
 // Handles leading state, movement, and notifications when leading starts or stops.
 public class Leadable : MonoBehaviour
 {
-    [SerializeField] float moveSpeed = 3.5f;     // animal walk speed
+    //[SerializeField] float moveSpeed = 3.5f;     // animal walk speed
     [SerializeField] float stopDistance = 2f;    // how far behind the player it trails
 
     public bool isMonster = false;
@@ -17,14 +17,10 @@ public class Leadable : MonoBehaviour
     // Lets other components check whether this animal is currently being led
     public bool IsBeingLed => leader != null;
 
-    // Recovered animals can no longer be interacted with.
-    // Objects without a recovery component remain interactable
-    public bool CanInteract => recovery == null || !recovery.IsRecovered;
-
     // Recovery is optional because monsters and other interactable objects
     // may use Leadable without being recoverable.
     private AnimalRecovery recovery;
-
+    private WanderingAIComponent wanderingAI;
     Transform leader;      // set while being led, null when released
     bool attacking = false;
 
@@ -35,6 +31,7 @@ public class Leadable : MonoBehaviour
     private void Awake()
     {
         recovery = GetComponent<AnimalRecovery>();
+        wanderingAI = GetComponent<WanderingAIComponent>();
     }
 
     /// <summary>
@@ -44,14 +41,6 @@ public class Leadable : MonoBehaviour
     /// <param name="player"> The Transform of the player leading this animal. </param>
     public void StartLeading(Transform player)
     {
-        // A recovered animal is no longer eligible for interaction.
-        // Check here as well as in the player controllers so other callers
-        // cannot accidentally restart leading.
-        if (!CanInteract)
-        {
-            return;
-        }
-
         if (isMonster)
         {
             // A monster "attacks" instead of being led.
@@ -101,14 +90,9 @@ public class Leadable : MonoBehaviour
 
         // Follow behind stopDistance away.
         Vector3 target = leader.position - leader.forward * stopDistance;
-        target.y = transform.position.y; 
+        target.y = transform.position.y;
 
-        Vector3 toTarget = target - transform.position;
-        if (toTarget.magnitude > 0.1f)
-        {
-            transform.position = Vector3.MoveTowards(
-                transform.position, target, moveSpeed * Time.deltaTime);
-        }
+        wanderingAI.SetTarget(target);
     }
 }
 

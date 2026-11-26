@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3909080402495233712}
   - component: {fileID: 4465637594245123171}
   - component: {fileID: 3194256776487060089}
+  - component: {fileID: 9215616458496978984}
   m_Layer: 0
   m_Name: TestPlayer
   m_TagString: Untagged
@@ -88,6 +89,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LeadController
   reachDistance: 3
+--- !u!208 &9215616458496978984
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 941688132964950165}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 0
+  m_Extents: {x: 0.7, y: 1, z: 0.7}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 1, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &4027703812853398156
 GameObject:
   m_ObjectHideFlags: 0

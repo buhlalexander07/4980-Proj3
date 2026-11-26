@@ -26,7 +26,7 @@ public class LeadController : MonoBehaviour
             {
                 // Show an interactable crosshair only for eligible objects.
                 Leadable animal = hoverHit.collider.GetComponentInParent<Leadable>();
-                aimingAtAnimal = animal != null && animal.CanInteract;
+                aimingAtAnimal = animal != null;
             }
         }
 
@@ -68,9 +68,8 @@ public class LeadController : MonoBehaviour
         {
             Leadable animal = hit.collider.GetComponentInParent<Leadable>();
 
-            // Ignore objects that cannot be interacted with,
-            // including animals that have already been recovered.
-            if (animal == null || !animal.CanInteract)
+            // Ignore objects that cannot be interacted with
+            if (animal == null)
             {
                 return;
             }

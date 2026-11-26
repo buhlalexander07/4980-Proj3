@@ -3,7 +3,7 @@ using System.IO;
 using TMPro;
 using UnityEngine;
 
-public class CowsCollectedCanvas : ISubscriber
+public class CowsCollectedCanvas : MonoBehaviour
 {
     [SerializeField]
     AnimalRecoveryTracker animalRecoveryTracker;
@@ -12,7 +12,7 @@ public class CowsCollectedCanvas : ISubscriber
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        animalRecoveryTracker.AddSubscriber(this);
+        animalRecoveryTracker.ProgressChanged += CowCountUpdate;
     }
 
     // Update is called once per frame
@@ -21,14 +21,11 @@ public class CowsCollectedCanvas : ISubscriber
         
     }
 
-    public override void Notify(string info)
+    public void CowCountUpdate(int recoveredCount, int totalAnimals)
     {
-        if (info == "recovered")
-        {
-            Debug.Log("Recieved");
-            // Used AI to understand the existing code, specifically how the count of recovered animals works 
-            int recovered = animalRecoveryTracker.RecoveredCount;
-            cowCount.text = $"{recovered} Cows";
-        }
+        Debug.Log("Recieved");
+        // Used AI to understand the existing code, specifically how the count of recovered animals works 
+        int recovered = animalRecoveryTracker.RecoveredCount;
+        cowCount.text = $"{recovered} Cows";
     }
 }

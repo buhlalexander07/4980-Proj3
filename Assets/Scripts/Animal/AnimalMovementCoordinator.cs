@@ -41,11 +41,6 @@ public class AnimalMovementCoordinator : MonoBehaviour
             recovery.Recovered += HandleRecovered;
         }
 
-        // Synchronize movement if this component is enabled mid-game.
-        if (recovery != null && recovery.IsRecovered)
-        {
-            FreezeRecoveredAnimal();
-        }
         else if (leadable.IsBeingLed)
         {
             HandleLeadingStarted(leadable);
@@ -73,17 +68,7 @@ public class AnimalMovementCoordinator : MonoBehaviour
     /// </summary>
     private void HandleLeadingStarted(Leadable animal)
     {
-        if (recovery != null && recovery.IsRecovered)
-        {
-            return;
-        }
-
-        // save the pre-leading settings for restoration on release.
-        wasKinematic = rb.isKinematic;
-        wanderingWasEnabled = wanderingAI != null && wanderingAI.enabled;
-
-        PauseWandering();
-        FreezePhysics();
+        wanderingAI.StartFollowingTarget();
     }
 
     /// <summary>
@@ -92,26 +77,9 @@ public class AnimalMovementCoordinator : MonoBehaviour
     /// </summary>
     private void HandleLeadingStopped(Leadable animal)
     {
-        if (recovery != null && recovery.IsRecovered)
+        // resume wandering
+        if (wanderingAI != null)
         {
-            FreezeRecoveredAnimal();
-            return;
-        }
-
-        // Restore the animal's original physics mode.
-        rb.isKinematic = wasKinematic;
-
-        // prevent leftover momentum from moving the released animal.
-        if (!rb.isKinematic)
-        {
-            rb.linearVelocity = Vector3.zero;
-            rb.angularVelocity = Vector3.zero;
-        }
-
-        // resume wandering only if it was enabled before leading began.
-        if (wanderingAI != null && wanderingWasEnabled)
-        {
-            wanderingAI.enabled = true;
             wanderingAI.StartWandering();
         }
     }
@@ -129,48 +97,7 @@ public class AnimalMovementCoordinator : MonoBehaviour
             leadable.StopLeading();
         }
 
-        // keep the recovered animal stationary.
-        FreezeRecoveredAnimal();
-    }
-
-    /// <summary>
-    /// Stops Greg's wandering behavior and prevents its Update method
-    /// from randomly restarting movement during leading.
-    /// </summary>
-    private void PauseWandering()
-    {
-        if (wanderingAI == null)
-        {
-            return;
-        }
-
-        wanderingAI.StopWandering();
-        wanderingAI.enabled = false;
-    }
-
-    /// <summary>
-    /// Stops physics-driven motion while another system controls position.
-    /// Kinematic Rigidbodies can be moved without responding to forces.
-    /// </summary>
-    private void FreezePhysics()
-    {
-        // Unity doesn't allow setting velocity on a kinemetic Rigidbody I think.
-        if (!rb.isKinematic)
-        {
-            rb.linearVelocity = Vector3.zero;
-            rb.angularVelocity = Vector3.zero;
-        }
-
-        rb.isKinematic = true;
-    }
-
-    /// <summary>
-    /// Finalizes a recovered animal's movement state by disabling wandering
-    /// and keeping its Rigidbody under non-physics control.
-    /// </summary>
-    private void FreezeRecoveredAnimal()
-    {
-        PauseWandering();
-        FreezePhysics();
+        // put the recovered animal in wandering mode
+        wanderingAI.StartWandering();
     }
 }

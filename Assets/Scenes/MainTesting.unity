@@ -332,7 +332,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31fff478702532d4b951849e10ef76a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GlobalTimer
-  default_time: 30
+  default_time: 180
   curr_time: 0
   timer_text: {fileID: 1318537038}
 --- !u!4 &117276375
@@ -505,10 +505,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 845690413182066440, guid: 4aa65e975d8799348ae69bcfca434463, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: 7caa57e83dae14cd2a1e719bbdc318e0, type: 2}
     - target: {fileID: 945614857988423587, guid: 4aa65e975d8799348ae69bcfca434463, type: 3}
       propertyPath: player
       value: 
@@ -517,14 +513,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: Monster
       objectReference: {fileID: 0}
-    - target: {fileID: 4150835768526979365, guid: 4aa65e975d8799348ae69bcfca434463, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
+    - target: {fileID: 1871900781318730087, guid: 4aa65e975d8799348ae69bcfca434463, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7582930750122487482, guid: 4aa65e975d8799348ae69bcfca434463, type: 3}
+      propertyPath: barnCenter
       value: 
-      objectReference: {fileID: 2100000, guid: 6fddde9ae692c4a6191312b7812a282d, type: 2}
+      objectReference: {fileID: 1740036714}
     - target: {fileID: 7582930750122487482, guid: 4aa65e975d8799348ae69bcfca434463, type: 3}
       propertyPath: herdCenter
       value: 
       objectReference: {fileID: 956962242}
+    - target: {fileID: 7582930750122487482, guid: 4aa65e975d8799348ae69bcfca434463, type: 3}
+      propertyPath: wanderChance
+      value: 0.005
+      objectReference: {fileID: 0}
+    - target: {fileID: 7582930750122487482, guid: 4aa65e975d8799348ae69bcfca434463, type: 3}
+      propertyPath: wanderRadius
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 8734557438714941403, guid: 4aa65e975d8799348ae69bcfca434463, type: 3}
       propertyPath: m_LocalPosition.x
       value: 25.35
@@ -568,10 +576,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1871900781318730087, guid: 4aa65e975d8799348ae69bcfca434463, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1906802646}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4aa65e975d8799348ae69bcfca434463, type: 3}
 --- !u!1001 &309047125
 PrefabInstance:
@@ -1428,6 +1433,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Test Animal (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 1871900781318730087, guid: e050d6e6d4b6df644bb5715cd1a67307, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7582930750122487482, guid: e050d6e6d4b6df644bb5715cd1a67307, type: 3}
+      propertyPath: barnCenter
+      value: 
+      objectReference: {fileID: 1740036714}
     - target: {fileID: 7582930750122487482, guid: e050d6e6d4b6df644bb5715cd1a67307, type: 3}
       propertyPath: herdCenter
       value: 
@@ -1658,6 +1671,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Test Animal (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 1871900781318730087, guid: e050d6e6d4b6df644bb5715cd1a67307, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7582930750122487482, guid: e050d6e6d4b6df644bb5715cd1a67307, type: 3}
+      propertyPath: barnCenter
+      value: 
+      objectReference: {fileID: 1740036714}
     - target: {fileID: 7582930750122487482, guid: e050d6e6d4b6df644bb5715cd1a67307, type: 3}
       propertyPath: herdCenter
       value: 
@@ -2113,6 +2134,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Test Animal (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 1871900781318730087, guid: e050d6e6d4b6df644bb5715cd1a67307, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7582930750122487482, guid: e050d6e6d4b6df644bb5715cd1a67307, type: 3}
+      propertyPath: barnCenter
+      value: 
+      objectReference: {fileID: 1740036714}
     - target: {fileID: 7582930750122487482, guid: e050d6e6d4b6df644bb5715cd1a67307, type: 3}
       propertyPath: herdCenter
       value: 
@@ -4739,6 +4768,7 @@ GameObject:
   - component: {fileID: 1458863803}
   - component: {fileID: 1458863802}
   - component: {fileID: 1458863801}
+  - component: {fileID: 1458863805}
   m_Layer: 0
   m_Name: GroundPlane
   m_TagString: Untagged
@@ -4840,6 +4870,38 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1458863805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1458863800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.AI.Navigation::Unity.AI.Navigation.NavMeshSurface
+  m_SerializedVersion: 0
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_UseGeometry: 1
+  m_DefaultArea: 0
+  m_GenerateLinks: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.16666667
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 23800000, guid: 93810f7547baf5b4f97ddd5ec0165d23, type: 2}
+  m_BuildHeightMesh: 0
 --- !u!1 &1478988451
 GameObject:
   m_ObjectHideFlags: 0
@@ -5504,6 +5566,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 408904, guid: 4cc487e002327cb43995ca1871bd142e, type: 3}
   m_PrefabInstance: {fileID: 1704880916}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1740036713
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1740036714}
+  m_Layer: 0
+  m_Name: BarnCenterPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1740036714
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1740036713}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -11.102, y: 0.1, z: 5.876}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1797742813
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5657,6 +5750,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Test Animal
       objectReference: {fileID: 0}
+    - target: {fileID: 1871900781318730087, guid: e050d6e6d4b6df644bb5715cd1a67307, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7582930750122487482, guid: e050d6e6d4b6df644bb5715cd1a67307, type: 3}
+      propertyPath: barnCenter
+      value: 
+      objectReference: {fileID: 1740036714}
     - target: {fileID: 7582930750122487482, guid: e050d6e6d4b6df644bb5715cd1a67307, type: 3}
       propertyPath: herdCenter
       value: 
@@ -5878,26 +5979,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 408904, guid: 4cc487e002327cb43995ca1871bd142e, type: 3}
   m_PrefabInstance: {fileID: 1901647990}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1906802638 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1871900781318730087, guid: 4aa65e975d8799348ae69bcfca434463, type: 3}
-  m_PrefabInstance: {fileID: 252861558}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1906802646
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1906802638}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 132f1f738ced445a8bcd5b36257514f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Leadable
-  moveSpeed: 3.5
-  stopDistance: 2
-  isMonster: 1
 --- !u!1 &1948339936
 GameObject:
   m_ObjectHideFlags: 0
@@ -6352,6 +6433,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Test Animal (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1871900781318730087, guid: e050d6e6d4b6df644bb5715cd1a67307, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7582930750122487482, guid: e050d6e6d4b6df644bb5715cd1a67307, type: 3}
+      propertyPath: barnCenter
+      value: 
+      objectReference: {fileID: 1740036714}
     - target: {fileID: 7582930750122487482, guid: e050d6e6d4b6df644bb5715cd1a67307, type: 3}
       propertyPath: herdCenter
       value: 
@@ -6472,6 +6561,7 @@ SceneRoots:
   - {fileID: 1458863804}
   - {fileID: 1057571877}
   - {fileID: 956962242}
+  - {fileID: 1740036714}
   - {fileID: 1020501472}
   - {fileID: 2011503414}
   - {fileID: 870184679}
@@ -6488,9 +6578,9 @@ SceneRoots:
   - {fileID: 610895310}
   - {fileID: 777590726}
   - {fileID: 688676609}
+  - {fileID: 252861558}
   - {fileID: 1948339938}
   - {fileID: 1682308754}
-  - {fileID: 252861558}
   - {fileID: 508903243}
   - {fileID: 1814266684}
   - {fileID: 117276375}
