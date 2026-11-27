@@ -16,6 +16,9 @@ public class WanderingAIComponent : MonoBehaviour
     private bool wandering = true;
     private bool returningToHome = false;
 
+    private float normalSpeed;
+    [SerializeField] private float speedMult = 2f;
+
     private Vector3 goalPos;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -23,12 +26,15 @@ public class WanderingAIComponent : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         recovery = GetComponent<AnimalRecovery>();
+
+        normalSpeed = agent.speed;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
         bool inBarn = false;
+        agent.speed = normalSpeed;
         if(recovery != null)
         {
             inBarn = recovery.IsRecovered;
@@ -68,7 +74,7 @@ public class WanderingAIComponent : MonoBehaviour
             //Lead state
             //We're not wandering, so we're following a target point
 
-
+            agent.speed = normalSpeed * speedMult;
         }
 
         if (goalUpdated)

@@ -164,6 +164,7 @@ MonoBehaviour:
   barnCenter: {fileID: 0}
   wanderRadius: 10
   wanderChance: 0.005
+  speedMult: 2
 --- !u!114 &3937973821920553101
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -202,7 +203,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9bea8105866ce94d8fa41dbefa3bda1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AnimalRecovery
-  escapeChance: 0.0001
+  escapeChance: 200000
 --- !u!195 &5606398776532146154
 NavMeshAgent:
   m_ObjectHideFlags: 0

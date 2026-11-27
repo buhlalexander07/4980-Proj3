@@ -10,7 +10,7 @@ public class GlobalTimer : MonoBehaviour
     [SerializeField] private float curr_time;
     private bool paused;
     private bool completed;
-    [SerializeField] private TextMeshProUGUI timer_text;
+    //[SerializeField] private TextMeshProUGUI timer_text;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -24,7 +24,7 @@ public class GlobalTimer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        UpdateTimerDisplay();
+        //UpdateTimerDisplay();
         if (!paused)
         {
             curr_time += Time.deltaTime;
@@ -49,6 +49,10 @@ public class GlobalTimer : MonoBehaviour
         paused = false;
     }
 
+    public float GetTargetTime()
+    {
+        return target_time;
+    }
     public void SetTargetTime(float new_time)
     {
         target_time = new_time;
@@ -78,29 +82,29 @@ public class GlobalTimer : MonoBehaviour
         return curr_time >= target_time;
     }
 
-    private void UpdateTimerDisplay()
-    {
-        if (timer_text != null)
-        {
-            if (completed)
-            {
-                // timer_text.text = "TIME UP";
-                // timer_text.color = Color.white;
-            }
-            else
-            {
-                timer_text.text = FormatTime(target_time - curr_time);
-                if (GetPercentageDone() >= 75.0f)
-                {
-                    timer_text.color = Color.red;
-                }
-                else
-                {
-                    timer_text.color = Color.white;
-                }
-            }
-        }
-    }
+    //private void UpdateTimerDisplay()
+    //{
+    //    if (timer_text != null)
+    //    {
+    //        if (completed)
+    //        {
+    //            // timer_text.text = "TIME UP";
+    //            // timer_text.color = Color.white;
+    //        }
+    //        else
+    //        {
+    //            timer_text.text = FormatTime(target_time - curr_time);
+    //            if (GetPercentageDone() >= 75.0f)
+    //            {
+    //                timer_text.color = Color.red;
+    //            }
+    //            else
+    //            {
+    //                timer_text.color = new Color(217, 209, 189);
+    //            }
+    //        }
+    //    }
+    //}
 
     private string FormatTime(float time)
     {

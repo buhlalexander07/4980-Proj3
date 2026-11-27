@@ -7,7 +7,9 @@ public class LeadController : MonoBehaviour
     [SerializeField] private EquipmentController equipmentController;
 
     Leadable current;   // the animal we're leading right now, null if none
-    bool aimingAtAnimal;  // true when the crosshair is over a leadable in reach
+    public bool aimingAtAnimal;  // true when the crosshair is over a leadable in reach
+    public bool AimingAtAnimal => aimingAtAnimal;
+    public bool IsLeading => current != null;
 
     void Update()
     {

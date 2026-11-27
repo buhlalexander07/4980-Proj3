@@ -14,11 +14,11 @@ public class AnimalRecovery : MonoBehaviour
 
     // Event called when animal escapes
     public event Action<AnimalRecovery> Escaped;
-    [SerializeField] private float escapeChance = 0.00001f;
+    [SerializeField] private int escapeChance = 1;
 
-    private void Update()
+    private void FixedUpdate()
     {
-        if (IsRecovered && UnityEngine.Random.Range(0f, 1f) <= escapeChance)
+        if (IsRecovered && UnityEngine.Random.Range(0, escapeChance) == 0)
         {
             Escape();
         }

@@ -46,7 +46,7 @@ public class Leadable : MonoBehaviour
             // A monster "attacks" instead of being led.
             attacking = true;
             gameObject.GetComponent<Monster>().Attack();
-            Debug.Log("Monster hit the player! (placeholder - time loss is teammate's system)");
+            FindFirstObjectByType<Knockout>()?.Blink();
             return;
         }
 

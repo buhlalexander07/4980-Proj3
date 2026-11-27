@@ -39,6 +39,11 @@ public class AnimalRecoveryTracker : IPublisher
         }
     }
 
+    private void Start()
+    {
+        ProgressChanged?.Invoke(RecoveredCount, TotalAnimals);
+    }
+
     /// <summary>
     /// Adds an animal to recovery tracking and listens for its recovery event.
     /// Animals already recovered when registered are counted immediately.
