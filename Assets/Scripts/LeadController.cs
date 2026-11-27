@@ -4,12 +4,28 @@ using UnityEngine.InputSystem;
 public class LeadController : MonoBehaviour
 {
     [SerializeField] float reachDistance = 3f;
+    [SerializeField] private EquipmentController equipmentController;
 
     Leadable current;   // the animal we're leading right now, null if none
     bool aimingAtAnimal;  // true when the crosshair is over a leadable in reach
 
     void Update()
     {
+        // Only allow leading interactions when the lead is equipped.
+        if (equipmentController != null && equipmentController.EquippedItem != EquipmentType.Lead)
+        {
+            aimingAtAnimal = false;
+
+            // Release the animal if the player switches away from the lead.
+            if (current != null)
+            {
+                current.StopLeading();
+                current = null;
+            }
+
+            return;
+        }
+
         var mouse = Mouse.current;
         if (mouse == null)
         {
@@ -79,7 +95,7 @@ public class LeadController : MonoBehaviour
             animal.StartLeading(transform);
 
             // Track an animal only if it actually started following.
-            // Monsters and recovered animals never become current.
+            // Monsters trigger their attack instead of following.
             if (animal.IsBeingLed)
             {
                 current = animal;
